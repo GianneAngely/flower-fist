@@ -109,7 +109,7 @@ export const BOUQUETS = [
   },
   {
     id: "carnation-pink", name: "Pink carnations", latin: "Dianthus caryophyllus",
-    grip: { x: 0.437, y: 0.78 }, size: 2.77,
+    grip: { x: 0.444, y: 0.758 }, size: 3.71,
     meaning: "A mother's love & gratitude",
     story: "Pink carnations are the classic Mother's Day flower: steady, tender love and thanks for being looked after. They last for weeks, just like the feeling.",
     giveWhen: "Mother's Day, or a thank-you to someone who raised you.",
@@ -117,7 +117,7 @@ export const BOUQUETS = [
   },
   {
     id: "calla-putih", name: "White calla lilies", latin: "Zantedeschia aethiopica",
-    grip: { x: 0.465, y: 0.601 }, size: 3.94,
+    grip: { x: 0.458, y: 0.722 }, size: 3.94,
     meaning: "Elegance & purity",
     story: "With one smooth curling petal, the calla lily is pure line and grace. It is a favourite wedding flower and a symbol of rebirth and new beginnings.",
     giveWhen: "Weddings, a fresh start, or someone with quiet elegance.",
@@ -125,7 +125,7 @@ export const BOUQUETS = [
   },
   {
     id: "ranunculus", name: "Peach ranunculus", latin: "Ranunculus asiaticus",
-    grip: { x: 0.486, y: 0.697 }, size: 2.48,
+    grip: { x: 0.485, y: 0.727 }, size: 3.29,
     meaning: "Radiant charm",
     story: "Layer upon layer of paper-thin petals: ranunculus says “I'm dazzled by your charms.” Soft, romantic and a little bit flirty.",
     giveWhen: "A crush, a first date, or someone who lights up the room.",
@@ -133,7 +133,7 @@ export const BOUQUETS = [
   },
   {
     id: "stargazer", name: "Stargazer lilies", latin: "Lilium 'Stargazer'",
-    grip: { x: 0.48, y: 0.82 }, size: 3.03,
+    grip: { x: 0.481, y: 0.771 }, size: 3.93,
     meaning: "Ambition & encouragement",
     story: "Stargazers face up to the sky and fill a room with scent. Bold and confident, they stand for big dreams and the courage to chase them.",
     giveWhen: "Promotions, opening days, or someone aiming high.",
@@ -141,7 +141,7 @@ export const BOUQUETS = [
   },
   {
     id: "gerbera", name: "Gerbera daisies", latin: "Gerbera jamesonii",
-    grip: { x: 0.497, y: 0.8 }, size: 3.05,
+    grip: { x: 0.501, y: 0.785 }, size: 4.19,
     meaning: "Cheerfulness & joy",
     story: "Gerberas are pure happiness in a flower: big round faces in candy colours. They are made for brightening someone's day.",
     giveWhen: "Get-well wishes, a bad week, or just to make someone smile.",
