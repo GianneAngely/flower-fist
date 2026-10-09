@@ -173,7 +173,7 @@ h2, h3 { margin: 0; }
   .mag-col { grid-area: col; position: static; width: auto; max-width: 620px; padding: 10px 24px 0; }
   .mag-meaning { font-size: 28px; }
   .mag-toc { grid-area: toc; position: static; width: auto; padding: 22px 24px 0; }
-  .mag-toc ol { display: grid; grid-template-columns: 1fr 1fr; column-gap: 18px; }
+  .mag-toc ol { columns: 2; column-gap: 18px; }
   .mag-toc button i, .mag-toc button em { display: none; }
   .mag-toc button b { overflow: hidden; text-overflow: ellipsis; }
 }
@@ -575,9 +575,11 @@ h2, h3 { margin: 0; }
 /* short desktop / iPad landscape screens: 18 issues in two columns so the contents never reach the title */
 @media (min-width: 901px) and (max-height: 860px) {
   .mag-toc { width: min(340px, calc(33vw - 64px)); }
-  .mag-toc ol { display: grid; grid-template-columns: 1fr 1fr; column-gap: 14px; }
+  .mag-toc ol { columns: 2; column-gap: 14px; }
   .mag-toc button { font-size: 12px; gap: 6px; }
   .mag-toc button span { width: 16px; }
   .mag-toc button b { overflow: hidden; text-overflow: ellipsis; }
   .mag-toc button i, .mag-toc button em { display: none; }
 }
+/* two-column contents read down the first column, then the second */
+.mag-toc li { break-inside: avoid; }
