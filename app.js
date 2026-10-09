@@ -424,7 +424,9 @@ function loop(now) {
   const W = canvas.width, H = canvas.height;
 
   // up to two hands: the fist holds the bouquet, the other hand (if any) sets its size
+  const t0 = performance.now();
   const res = hands.detectForVideo(video, now);
+  const detectMs = performance.now() - t0;
   // A pinch curls the index finger too, so the resizing hand can also look like a fist.
   // If both qualify, the real holder is the one whose thumb is NOT touching the index tip.
   const fists = res.worldLandmarks.map((w, i) => i).filter(i => isFist(res.worldLandmarks[i]));
@@ -523,8 +525,57 @@ function loop(now) {
   ctx.filter = state.filter.css;
   ctx.drawImage(scene, 0, 0);
   ctx.filter = "none";
+  if (DEBUG) drawDebug(res, hold, detectMs, dt);
 
   if (frame++ % 4 === 0) drawFilterPreviews();
+}
+
+// ================= ?debug: what the vision models see =================
+const DEBUG = new URLSearchParams(location.search).has("debug");
+const BONES = [[0, 1], [1, 2], [2, 3], [3, 4], [0, 5], [5, 6], [6, 7], [7, 8], [5, 9], [9, 10], [10, 11], [11, 12],
+  [9, 13], [13, 14], [14, 15], [15, 16], [13, 17], [17, 18], [18, 19], [19, 20], [0, 17]];
+let fps = 0;
+function drawDebug(res, hold, ms, dt) {
+  const W = canvas.width, u = Math.max(2, W / 520);
+  const M = p => { const c = toCanvas(p); return { x: W - c.x, y: c.y }; }; // the picture on screen is mirrored
+  fps = lerp(fps, 1 / Math.max(dt, 1e-3), 0.1);
+  ctx.save();
+  ctx.lineWidth = u; ctx.lineJoin = "round";
+  ctx.font = `600 ${7 * u}px ui-monospace, SFMono-Regular, Menlo, monospace`;
+  res.landmarks.forEach((hand, i) => {
+    const pts = hand.map(M), w = res.worldLandmarks[i];
+    const label = i === hold ? "FIST · holding"
+      : isFist(w) ? "fist" : peace(w) ? "peace" : openPalm(w) ? "open palm"
+      : resizePose(w) ? `pinch gap ${pinchGap(w).toFixed(2)}` : "hand";
+    const col = i === hold ? "#FF5C8A" : "#4DE1FF";
+    ctx.strokeStyle = col;
+    ctx.setLineDash([3 * u, 3 * u]);                         // hull that limits the skin mask
+    ctx.beginPath(); tracePath(ctx, convexHull(pts), 1.35); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.beginPath();                                          // 21-point skeleton
+    for (const [a, b] of BONES) { ctx.moveTo(pts[a].x, pts[a].y); ctx.lineTo(pts[b].x, pts[b].y); }
+    ctx.stroke();
+    ctx.fillStyle = "#fff";
+    for (const p of pts) { ctx.beginPath(); ctx.arc(p.x, p.y, 1.8 * u, 0, 7); ctx.fill(); }
+    const top = pts.reduce((a, p) => (p.y < a.y ? p : a)), tw = ctx.measureText(label).width;
+    ctx.fillStyle = "rgba(20,14,10,.7)";
+    ctx.fillRect(top.x - tw / 2 - 4 * u, top.y - 19 * u, tw + 8 * u, 11 * u);
+    ctx.fillStyle = col; ctx.fillText(label, top.x - tw / 2, top.y - 11 * u);
+  });
+  if (pos && grow > 0) {                                     // grip point + stem axis
+    const x = W - pos.x, r = pos.size * 0.3;
+    ctx.strokeStyle = "#FFD23F"; ctx.lineWidth = 1.5 * u;
+    ctx.beginPath(); ctx.arc(x, pos.y, r * 0.35, 0, 7);
+    ctx.moveTo(x + pos.dx * 0.9, pos.y + pos.dy * 0.9); ctx.lineTo(x - pos.dx * 0.9, pos.y - pos.dy * 0.9);
+    ctx.stroke();
+  }
+  const lines = [`hands ${res.landmarks.length}`, `hand model ${ms.toFixed(1)} ms`, `${fps.toFixed(0)} fps`,
+    `scale ${state.flowerScale.toFixed(2)}×${state.sizeLocked ? " locked" : ""}`];
+  ctx.fillStyle = "rgba(20,14,10,.6)";
+  ctx.fillRect(8 * u, 8 * u, 92 * u, (lines.length * 10 + 6) * u);
+  ctx.fillStyle = "#fff";
+  lines.forEach((t, i) => ctx.fillText(t, 13 * u, (19 + i * 10) * u));
+  ctx.restore();
 }
 
 function showSizeBadge() {
