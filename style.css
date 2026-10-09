@@ -143,6 +143,13 @@ h2, h3 { margin: 0; }
 .mag-sticker:disabled svg { animation-duration: 40s; }
 @keyframes pulse { from { transform: scale(.9); opacity: .9; } to { transform: scale(1.25); opacity: 0; } }
 
+/* iPad landscape / small laptops: the text column sits close to the photo, so the sticker tucks inside it */
+@media (min-width: 901px) and (max-width: 1300px) {
+  .mag-sticker { width: 128px; height: 128px; left: calc(67.7% - 146px); bottom: 6%; }
+  .mag-sticker-core { inset: 27px; }
+  .mag-sticker-core img { width: 36px; height: 36px; }
+  .mag-fig { display: none; }
+}
 /* phones + iPad portrait: a magazine cover (photo card with the title on it), then the story */
 @media (max-width: 900px) {
   .mag { position: relative; min-height: 100svh; overflow: visible; display: grid; grid-template-columns: minmax(0, 1fr);
@@ -540,3 +547,28 @@ h2, h3 { margin: 0; }
 .size-grid button small { display: block; font-weight: 500; color: var(--ink-soft); font-size: 10.5px; }
 .size-grid button.active { border-color: var(--rose); box-shadow: 0 0 0 2px var(--rose); background: var(--paper); }
 
+/* narrower screens (iPad landscape and down): slimmer side panels, compact tutorial so the camera stays visible */
+@media (max-width: 1200px) {
+  .studio { --left-col: min(var(--left), 212px); --right-col: min(var(--right), 272px); }
+  .tutorial { left: 10px; top: 10px; }
+  .tutorial-card { width: 214px; padding: 12px 14px; }
+  .tut-dots { margin-bottom: 8px; }
+  .pose { width: 68px; height: 68px; }
+  .tutorial-card h2 { font-size: 16px; margin: 6px 0; }
+  .steps { font-size: 11.5px; margin-bottom: 10px; padding-left: 16px; }
+  .steps li { margin-bottom: 3px; }
+  .tut-actions .btn-ghost, .btn-primary.small { padding: 7px 14px; font-size: 13px; }
+}
+@media (min-width: 901px) and (max-width: 1200px) {
+  .flower-grid { grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 8px; }
+  .flower-card span { font-size: 11px; }
+}
+
+/* iPad portrait: story and contents side by side so the whole issue fits on one screen */
+@media (min-width: 640px) and (max-width: 900px) {
+  .mag { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); grid-template-areas: "meta meta" "hero hero" "nav nav" "col toc"; align-content: start; }
+  .mag-toc { padding: 10px 24px 0 8px; }
+  .mag-toc ol { grid-template-columns: 1fr; }
+  .mag-hero { height: min(50svh, 600px); }
+  .mag-hero img { height: calc(min(50svh, 600px) - 190px); }
+}
