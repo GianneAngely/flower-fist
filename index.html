@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flower Fist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=73">
+</head>
+<body>
+
+<!-- Botanical line-art used as page decoration (never inside the camera) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="sprig" viewBox="0 0 120 260">
+      <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M60 258 C58 200 66 150 58 92 C54 64 60 40 66 22"/>
+        <path d="M59 200 C40 188 22 192 12 176 C30 168 48 176 59 196"/>
+        <path d="M61 160 C80 146 98 152 110 136 C90 128 72 138 61 156"/>
+        <path d="M58 120 C42 110 30 114 22 100 C38 94 50 104 58 116"/>
+        <path d="M66 22 C56 14 56 2 66 2 C76 2 76 14 66 22 Z"/>
+        <path d="M66 22 C54 26 44 20 46 12 C54 8 62 14 66 22 Z"/>
+        <path d="M66 22 C78 26 88 20 86 12 C78 8 70 14 66 22 Z"/>
+        <path d="M66 22 C60 32 62 42 70 42 C76 36 72 28 66 22 Z"/>
+      </g>
+    </symbol>
+    <symbol id="tulip-line" viewBox="0 0 100 240">
+      <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M50 238 C50 180 48 120 50 70"/>
+        <path d="M30 20 C28 46 36 68 50 70 C64 68 72 46 70 20 C62 30 56 30 50 10 C44 30 38 30 30 20 Z"/>
+        <path d="M49 190 C30 170 22 140 26 110 C40 130 48 160 49 186"/>
+        <path d="M51 160 C66 140 76 120 74 96 C62 112 54 134 51 156"/>
+      </g>
+    </symbol>
+    <symbol id="petal" viewBox="0 0 40 40">
+      <path d="M20 2 C34 10 36 30 20 38 C4 30 6 10 20 2 Z" fill="currentColor"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="petals" aria-hidden="true"></div>
+
+<!-- ===== Landing: an interactive flower magazine, one "issue" per bouquet ===== -->
+<section id="landing" class="mag" aria-roledescription="carousel" aria-label="Flower issues">
+  <header class="mag-meta">
+    <span>Flower Fist</span>
+    <span>Issue N°<b id="magIssueTop">01</b> — The Language of Flowers</span>
+    <span>2026</span>
+  </header>
+
+  <div class="mag-hero" id="magHero">
+    <img id="magImg" alt="">
+    <p class="mag-fig" id="magFig"></p>
+    <div class="mag-petals" id="magPetals" aria-hidden="true"></div>
+  </div>
+
+  <!-- main call to action: a rotating "sticker" on the edge of the photo -->
+  <button class="mag-sticker" id="startBtn" disabled aria-label="Click to open the studio with this bouquet">
+    <svg viewBox="0 0 200 200" aria-hidden="true">
+      <defs><path id="ring" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0"/></defs>
+      <text><textPath href="#ring" textLength="462" lengthAdjust="spacing">OPEN THE STUDIO ✿ CLICK TO START ✿&#160;</textPath></text>
+    </svg>
+    <span class="mag-sticker-core"><img id="magStickerImg" alt=""><small id="magStickerLabel">loading</small></span>
+  </button>
+
+  <h1 class="mag-title">Hold a<em>bloom.</em></h1>
+
+  <div class="mag-nav">
+    <button id="magPrev" class="mag-arrow" aria-label="Previous flower">←</button>
+    <span class="mag-no" id="magNo">01</span>
+    <button id="magNext" class="mag-arrow" aria-label="Next flower">→</button>
+  </div>
+
+  <article class="mag-col" aria-live="polite">
+    <p class="mag-kicker" id="magName"></p>
+    <p class="mag-latin" id="magLatin"></p>
+    <h2 class="mag-meaning" id="magMeaning"></h2>
+    <p class="mag-story" id="magStory"></p>
+    <p class="mag-give"><span>Give it for</span><b id="magGive"></b></p>
+    <p class="mag-note">Tap <b>Start</b> on the round sticker to open your camera, then make a fist: this bouquet appears in your grip. Processed only in your browser.</p>
+  </article>
+
+  <nav class="mag-toc" aria-label="Contents">
+    <p class="mag-toc-title">Contents</p>
+    <ol id="magThumbs"></ol>
+  </nav>
+</section>
+
+<!-- ===== Studio ===== -->
+<section id="studio" class="studio" hidden>
+  <header class="topbar">
+    <button class="logo" id="homeBtn" title="Back to the flower issues">Flower <em>Fist</em></button>
+    <div class="topbar-actions">
+      <button id="helpBtn" class="btn-ghost">How it works</button>
+    </div>
+    <svg class="deco deco-top"><use href="#sprig"/></svg>
+  </header>
+
+  <div class="studio-body" id="studioBody">
+    <!-- Left: bouquets -->
+    <aside class="panel panel-left" id="leftPanel" aria-label="Bouquets">
+      <div class="panel-head">
+        <button id="detailBack" class="icon-btn" aria-label="Back to all bouquets" title="All bouquets" hidden>←</button>
+        <h2 id="panelTitle">Bouquets</h2>
+        <button id="leftToggle" class="icon-btn" aria-label="Collapse bouquet panel" title="Collapse"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
+      <div class="flower-grid" id="flowerGrid"></div>
+      <div class="flower-detail" id="detail" hidden>
+        <div class="detail-nav">
+          <button id="detailPrev" class="icon-btn" aria-label="Previous flower">←</button>
+          <span id="detailCount"></span>
+          <button id="detailNext" class="icon-btn" aria-label="Next flower">→</button>
+        </div>
+        <div class="detail-art">
+          <div class="detail-circle" id="detailCircle"></div>
+          <img id="detailImg" alt="">
+        </div>
+        <h3 class="detail-name" id="detailName"></h3>
+        <p class="latin" id="detailLatin"></p>
+        <p class="meaning" id="detailMeaning"></p>
+        <p class="story" id="detailStory"></p>
+        <div class="give"><span>Give it for</span><p id="detailGive"></p></div>
+        <div class="palette" id="detailPalette"></div>
+      </div>
+      <div class="flower-rail" id="flowerRail"></div>
+    </aside>
+
+    <div class="gutter" data-side="left" title="Drag to resize"></div>
+
+    <!-- Camera -->
+    <main class="stage-wrap">
+      <div class="stage" id="stage">
+        <canvas id="canvas"></canvas>
+        <div id="recBadge" class="rec-badge" hidden><span></span>Recording <b id="recTime">0:00</b></div>
+        <div id="countdown" class="countdown" hidden></div>
+        <div id="boothCount" class="booth-count" hidden></div>
+        <div id="flash" class="flash"></div>
+        <div class="now-holding" id="nowHolding"></div>
+        <div class="size-badge" id="sizeBadge" hidden></div>
+
+        <div class="zoom" aria-label="Camera zoom">
+          <button id="zoomIn" aria-label="Zoom in" title="Zoom in"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 8h10M8 3v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+          <button id="zoomOut" aria-label="Zoom out" title="Zoom out" disabled><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 8h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+        </div>
+
+        <!-- Tutorial -->
+        <div id="tutorial" class="tutorial">
+          <div class="tutorial-card">
+            <div class="tut-dots" id="tutDots"></div>
+            <div class="tut-step" id="tutStep">
+              <div class="pose">
+                <svg class="pose-ring" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46"/><circle id="poseProgress" cx="50" cy="50" r="46"/></svg>
+                <img class="pose-img" id="tutImg" alt="">
+              </div>
+              <h2 id="tutorialTitle"></h2>
+              <ol class="steps" id="tutSteps"></ol>
+            </div>
+            <div class="tut-actions">
+              <button id="skipTutorial" class="btn-ghost">Skip</button>
+              <div>
+                <button id="tutBack" class="btn-ghost" hidden>Back</button>
+                <button id="tutNext" class="btn-primary small">Next</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div class="gutter" data-side="right" title="Drag to resize"></div>
+
+    <!-- Right: controls -->
+    <aside class="panel panel-right" aria-label="Controls">
+      <button class="right-head" id="rightToggle" aria-label="Hide controls panel">
+        <span>Hide panel</span>
+        <span class="icon-btn"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </button>
+      <section class="card capture">
+        <div class="segmented" role="group" aria-label="Capture mode">
+          <button data-mode="photo" class="active">Photo</button>
+          <button data-mode="video">Video</button>
+          <button data-mode="booth">Booth</button>
+        </div>
+        <button id="shutter" class="shutter" aria-label="Take photo"><span></span></button>
+        <button id="timerBtn" class="pill" title="Self-timer">Timer off</button>
+        <div class="shots-pick" id="shotsPick" hidden role="group" aria-label="Number of photos"></div>
+      </section>
+
+      <section class="card">
+        <h3>Filters</h3>
+        <div id="filterPicker" class="filter-grid"></div>
+      </section>
+
+      <section class="card">
+        <div class="card-head">
+          <h3>Beauty</h3>
+          <label class="switch"><input type="checkbox" id="beautyOn"><span></span></label>
+        </div>
+        <div class="beauty" id="beautyControls">
+          <label class="slider-row">Smooth skin
+            <input type="range" id="smoothRange" min="0" max="1" step="0.05" value="0.55">
+          </label>
+          <span class="sub">Lip tint</span>
+          <div class="swatches" id="lipSwatches"></div>
+        </div>
+      </section>
+
+      <section class="card player" id="player">
+        <h3>Music</h3>
+        <div class="turntable">
+          <div class="vinyl" id="vinyl">
+            <img id="vinylLabel" alt="">
+          </div>
+          <div class="tonearm" id="tonearm"></div>
+        </div>
+        <div class="track">
+          <b id="trackTitle">—</b>
+          <span id="trackArtist"></span>
+        </div>
+        <div class="progress">
+          <span id="trackPos">0:00</span>
+          <input type="range" id="seek" min="0" max="1000" value="0" aria-label="Seek">
+          <span id="trackDur">0:00</span>
+        </div>
+        <div class="transport">
+          <button id="prevBtn" aria-label="Previous">⏮</button>
+          <button id="playBtn" class="play" aria-label="Play">▶</button>
+          <button id="nextBtn" aria-label="Next">⏭</button>
+          <button id="listBtn" aria-label="Show tracklist" title="Tracklist">☰</button>
+        </div>
+        <ol class="tracklist" id="tracklist" hidden></ol>
+        <label class="check"><input type="checkbox" id="recordMusic" checked> Add music to video recordings</label>
+        <p class="hint">Plays Spotify's 30-second previews. <a id="openSpotify" href="#" target="_blank" rel="noopener">Hear the full song on Spotify ↗</a></p>
+      </section>
+    </aside>
+  </div>
+</section>
+
+
+<!-- ===== Photo booth result ===== -->
+<section id="booth" class="booth" hidden role="dialog" aria-modal="true" aria-labelledby="boothTitle">
+  <div class="booth-card">
+    <div class="booth-preview"><canvas id="boothCanvas"></canvas></div>
+    <div class="booth-side">
+      <p class="eyebrow">Photo booth</p>
+      <h2 id="boothTitle">Your print is ready</h2>
+      <h3>Print size</h3>
+      <div class="size-grid" id="boothSizes"></div>
+      <h3 id="boothLayoutLabel">Layout</h3>
+      <div class="segmented" id="boothLayouts"></div>
+      <h3>Frame</h3>
+      <div class="theme-grid" id="boothThemes"></div>
+      <div class="custom-panel" id="customPanel" hidden>
+        <span class="sub">Background</span>
+        <div class="custom-colors">
+          <div id="customColors"></div>
+          <label class="color-pick" title="Pick any colour"><input type="color" id="customColor" aria-label="Custom background colour"><span>+</span></label>
+        </div>
+        <span class="sub">Bouquets <small>(up to 4)</small></span>
+        <div class="custom-flowers" id="customFlowers"></div>
+        <label class="check"><input type="checkbox" id="customPetals"> Scatter petals</label>
+      </div>
+      <h3>Caption</h3>
+      <input id="boothCaption" class="text-input" maxlength="28" value="Flower Fist">
+      <div class="booth-actions">
+        <button id="boothRetake" class="btn-ghost">Retake</button>
+        <button id="boothClose" class="btn-ghost">Close</button>
+        <button id="boothSave" class="btn-primary small">Download</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="toast" class="toast" hidden></div>
+<video id="video" autoplay playsinline muted hidden></video>
+<script type="module" src="app.js?v=68"></script>
+</body>
+</html>
