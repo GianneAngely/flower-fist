@@ -101,7 +101,7 @@ export const BOUQUETS = [
   },
   {
     id: "spider-lily", name: "Red spider lilies", latin: "Lycoris radiata",
-    grip: { x: 0.516, y: 0.611 }, size: 3.73,
+    grip: { x: 0.523, y: 0.76 }, size: 3.73,
     meaning: "Farewell & longing",
     story: "In Japan the higanbana blooms at the autumn equinox along paths and riverbanks. Its flowers and leaves never appear at the same time, so it became a flower of goodbyes, of souls that can't meet, and of remembering someone.",
     giveWhen: "Remembrance and autumn, not as a gift in Japan, where it's thought unlucky.",
