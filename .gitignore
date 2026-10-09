@@ -1,0 +1,9 @@
+# working files (originals, blue-screen and keyed versions, concept previews)
+_raw/
+_previews/
+# early bouquet experiments, no longer used
+bouquet.png
+assets/bouquet*.png
+assets/kraft-*.png
+.DS_Store
+.vercel
