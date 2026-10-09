@@ -1,5 +1,5 @@
 import { FilesetResolver, HandLandmarker, ImageSegmenter, FaceLandmarker } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/vision_bundle.mjs";
-import { BOUQUETS } from "./flowers.js?v=29";
+import { BOUQUETS } from "./flowers.js?v=30";
 import { PLAYLIST } from "./playlist.js?v=23";
 import { SHOT_COUNTS, LAYOUTS, SIZES, THEMES, preloadFlowers, renderBooth, customTheme } from "./booth.js?v=63";
 
