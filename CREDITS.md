@@ -22,6 +22,12 @@ Pinterest doesn't own these photos; copyright stays with the original creators. 
 | daisy.png | https://i.pinimg.com/originals/b5/ba/75/b5ba75e92f4c639806ade705444cb928.jpg |
 | matahari.png | https://i.pinimg.com/originals/d4/10/14/d410142e0460da38af3fa9d5a27500a6.jpg |
 | matahari-liar.png | https://i.pinimg.com/originals/3d/40/bc/3d40bc426c8f22dd5cfdec998324fc4a.jpg |
+| spider-lily.png | https://i.pinimg.com/originals/83/fa/27/83fa27ba08cf0e99327559f4c3285e5a.jpg |
+| carnation-pink.png | https://i.pinimg.com/originals/d3/75/68/d37568c4f48ed5a9e81012f9e116fe70.jpg |
+| calla-putih.png | https://i.pinimg.com/originals/5d/12/c1/5d12c1f5c3156d8a8dcc1ac63088ce95.jpg |
+| ranunculus.png | https://i.pinimg.com/originals/b7/f2/16/b7f2160d47e3edb7ffaa2e29028d0f81.webp |
+| stargazer.png | https://i.pinimg.com/originals/10/f0/f3/10f0f335183a3f0dfe7350871da87070.jpg |
+| gerbera.png | https://i.pinimg.com/originals/1d/dd/30/1ddd30017fb32a080c2f0b0a7f4ea2d9.jpg |
 
 Working files live in `_raw/` (originals, blue-screen versions, keyed versions). The app doesn't use them.
 
