@@ -103,7 +103,7 @@ h2, h3 { margin: 0; }
 .mag-toc-title { margin: 0 0 8px; font: italic 300 22px var(--display); }
 .mag-toc ol { list-style: none; margin: 0; padding: 0; }
 .mag-toc button {
-  width: 100%; display: flex; align-items: baseline; gap: 10px; padding: 3px 0;
+  width: 100%; display: flex; align-items: baseline; gap: 10px; padding: 1px 0;
   border: 0; background: none; text-align: left; color: #6E625A; font-size: 13px; transition: color .2s, padding .25s;
 }
 .mag-toc button span { font: 300 italic 13px var(--display); width: 18px; }
@@ -568,7 +568,16 @@ h2, h3 { margin: 0; }
 @media (min-width: 640px) and (max-width: 900px) {
   .mag { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); grid-template-areas: "meta meta" "hero hero" "nav nav" "col toc"; align-content: start; }
   .mag-toc { padding: 10px 24px 0 8px; }
-  .mag-toc ol { grid-template-columns: 1fr; }
   .mag-hero { height: min(50svh, 600px); }
   .mag-hero img { height: calc(min(50svh, 600px) - 190px); }
+}
+
+/* short desktop / iPad landscape screens: 18 issues in two columns so the contents never reach the title */
+@media (min-width: 901px) and (max-height: 860px) {
+  .mag-toc { width: min(340px, calc(33vw - 64px)); }
+  .mag-toc ol { display: grid; grid-template-columns: 1fr 1fr; column-gap: 14px; }
+  .mag-toc button { font-size: 12px; gap: 6px; }
+  .mag-toc button span { width: 16px; }
+  .mag-toc button b { overflow: hidden; text-overflow: ellipsis; }
+  .mag-toc button i, .mag-toc button em { display: none; }
 }
