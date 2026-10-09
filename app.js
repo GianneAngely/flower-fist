@@ -164,6 +164,7 @@ addEventListener("keydown", e => {
 });
 let wheelLock = 0;
 $("landing").addEventListener("wheel", e => {
+  if (matchMedia("(max-width: 900px)").matches) return; // stacked layout: the wheel just scrolls the page
   if (Date.now() < wheelLock || Math.abs(e.deltaY) + Math.abs(e.deltaX) < 20) return;
   wheelLock = Date.now() + 750;
   const d = (Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY) > 0 ? 1 : -1;
@@ -572,13 +573,19 @@ $("leftToggle").onclick = () => {
   $("leftToggle").setAttribute("aria-label", collapsed ? "Expand bouquet panel" : "Collapse bouquet panel");
   store.set("leftCollapsed", collapsed);
 };
-if (store.get("leftCollapsed", false)) studio.classList.add("left-collapsed");
 $("rightToggle").onclick = () => {
   const collapsed = studio.classList.toggle("right-collapsed");
   $("rightToggle").setAttribute("aria-label", collapsed ? "Show controls panel" : "Hide controls panel");
   store.set("rightCollapsed", collapsed);
 };
-if (store.get("rightCollapsed", false)) studio.classList.add("right-collapsed");
+// phones stack everything, so the desktop collapse state only applies on wide screens
+const phone = matchMedia("(max-width: 900px)");
+function applyCollapse() {
+  studio.classList.toggle("left-collapsed", !phone.matches && store.get("leftCollapsed", false));
+  studio.classList.toggle("right-collapsed", !phone.matches && store.get("rightCollapsed", false));
+}
+applyCollapse();
+phone.addEventListener("change", applyCollapse);
 
 // ================= Flower meaning (inside the bouquet panel) =================
 let detailIndex = 0;
@@ -663,7 +670,9 @@ function drawFilterPreviews() {
     c.save();
     c.filter = f.css;
     c.translate(160, 0); c.scale(-1, 1);
-    c.drawImage(video, view.cx, view.cy, view.cw, view.ch, 0, 0, 160, 100); // same crop as the stage
+    // centre of the stage's crop, cut to the thumbnail's shape so it never squashes
+    const sw = Math.min(view.cw, view.ch * 1.6), sh = sw / 1.6;
+    c.drawImage(video, view.cx + (view.cw - sw) / 2, view.cy + (view.ch - sh) / 2, sw, sh, 0, 0, 160, 100);
     c.restore();
   }
 }
