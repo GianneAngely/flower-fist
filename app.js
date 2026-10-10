@@ -808,12 +808,12 @@ async function runBooth() {
   for (let i = 0; i < state.boothShots; i++) {
     $("boothCount").hidden = false;
     $("boothCount").textContent = `${i + 1} / ${state.boothShots}`;
-    await countdown(state.timer || 3);
+    await countdown(state.timer); // timer off = shots back to back
     // a layout change can clear the canvas: wait until a camera frame is drawn again
     for (let t = 0; t < 20 && canvasBlank(); t++) await new Promise(r => setTimeout(r, 50));
     booth.shots.push(snapshot());
     flash();
-    await new Promise(r => setTimeout(r, 700));
+    await new Promise(r => setTimeout(r, state.timer ? 700 : 1000)); // a beat to change pose
   }
   $("boothCount").hidden = true;
   openBooth();
